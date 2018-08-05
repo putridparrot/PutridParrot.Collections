@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PutridParrot.Collections\BinaryTreeNode.cs">
+      <Link>BinaryTreeNode.cs</Link>
+    </Compile>
     <Compile Include="..\PutridParrot.Collections\ComparerImpl.cs">
       <Link>ComparerImpl.cs</Link>
     </Compile>
