@@ -49,6 +49,9 @@
     <Compile Include="..\PutridParrot.Collections\ListExtensions.cs">
       <Link>ListExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\PutridParrot.Collections\Matrix.cs">
+      <Link>Matrix.cs</Link>
+    </Compile>
     <Compile Include="..\PutridParrot.Collections\TreeNode.cs">
       <Link>TreeNode.cs</Link>
     </Compile>
