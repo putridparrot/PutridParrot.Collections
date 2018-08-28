@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PutridParrot.Collections\PutridParrot.Collections.csproj">
-      <Project>{83b0d552-2412-4332-99eb-13e93ca21cd0}</Project>
-      <Name>PutridParrot.Collections</Name>
+    <ProjectReference Include="..\PutridParrot.Collections.4.7.1\PutridParrot.Collections.4.7.1.csproj">
+      <Project>{22c2fdf9-099d-4a69-a6e4-96b49a4f6147}</Project>
+      <Name>PutridParrot.Collections.4.7.1</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
