@@ -103,5 +103,21 @@ namespace Tests.PutridParrot.Collections
 
             Assert.That(array, Is.Ordered.Ascending);
         }
+
+        [Test]
+        public void Add_NullComparision_ExpectException()
+        {
+            IList<int> array = new[] { 0, 1, 2, 5 };
+            Assert.Throws<ArgumentNullException>(() => array.Add(4, null));
+        }
+
+        [Test]
+        public void Add_WithComparision_ExpectItemInCorrectSortedPlace()
+        {
+            IList<int> list = new List<int>{ 0, 1, 2, 5 };
+            list.Add(4, (a, b) => a - b);
+            Assert.AreEqual(4, list[3]);
+        }
+
     }
 }

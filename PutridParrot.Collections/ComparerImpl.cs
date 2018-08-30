@@ -10,14 +10,14 @@ namespace PutridParrot.Collections
         private readonly Func<T, int> _objectHash;
 
         public ComparerImpl(Func<T, T, int> objectComparer) :
-            this(objectComparer, o => 0)
+            this(objectComparer, o => o.GetHashCode())
         {
         }
 
         public ComparerImpl(Func<T, T, int> objectComparer, Func<T, int> objectHash)
         {
             _objectComparer = objectComparer ?? throw new ArgumentNullException(nameof(objectComparer));
-            _objectHash = objectHash;
+            _objectHash = objectHash ?? throw new ArgumentNullException(nameof(objectHash)); ;
         }
 
         public int Compare(T x, T y)

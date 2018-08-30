@@ -38,6 +38,5 @@ namespace PutridParrot.Collections
         {
             TraverseTree.BreadthTraversal(node, n => new[] { n.Left, n.Right }, action);
         }
-
     }
 }
