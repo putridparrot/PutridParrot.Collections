@@ -6,4 +6,4 @@ build:
   verbosity: minimal
 
 before_build:
-  - nuget restore
+- cmd: nuget restore
