@@ -7,24 +7,6 @@ namespace PutridParrot.Collections
     public static class ListExtensions
     {
         /// <summary>
-        /// Very simplistic implementation of AddRange for those IList implementations which 
-        /// don't support it
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <param name="items"></param>
-        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
-        {
-            if (list != null)
-            {
-                foreach (var item in items)
-                {
-                    list.Add(item);
-                }
-            }
-        }
-
-        /// <summary>
         /// A simple AddRange which allows the user to include an item if the Predicate
         /// returns true.
         /// </summary>
@@ -32,13 +14,16 @@ namespace PutridParrot.Collections
         /// <param name="list"></param>
         /// <param name="items"></param>
         /// <param name="function"></param>
-        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Predicate<T> function)
+        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Predicate<T> function = null)
         {
             if (list != null)
             {
                 if (function == null)
                 {
-                    list.AddRange(items);
+                    foreach (var item in items)
+                    {
+                        list.Add(item);
+                    }
                 }
                 else
                 {
@@ -198,7 +183,7 @@ namespace PutridParrot.Collections
             if (comparer == null)
                 throw new ArgumentNullException(nameof(comparer));
 
-            IList<T> newList = list.Distinct(new ComparerImpl<T>(comparer)).ToList();
+            var newList = list.Distinct(new Comparer<T>(comparer)).ToList();
             list.Clear();
             list.AddRange(newList);
         }

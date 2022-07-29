@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using NUnit.Framework;
 using PutridParrot.Collections;
 
@@ -124,6 +125,53 @@ namespace Tests.PutridParrot.Collections
                 for (var j = 0; j < copy.Columns; j++)
                 {
                     Assert.AreEqual(matrix[i, j], copy[i, j]);
+                }
+            }
+        }
+
+        [Test]
+        public void CreateMatrixFromIEnumerableOfIEnumerable()
+        {
+            var matrix = new List<List<int>>
+            {
+                new List<int> { 1, 2, 3 },
+                new List<int> { 4, 5, 6 }
+            };
+
+            var copy = new Matrix<int>(matrix);
+
+            Assert.AreEqual(matrix.Count, copy.Rows);
+            Assert.AreEqual(matrix[0].Count, copy.Columns);
+
+            for (var i = 0; i < copy.Rows; i++)
+            {
+                for (var j = 0; j < copy.Columns; j++)
+                {
+                    Assert.AreEqual(matrix[i][j], copy[i, j]);
+                }
+            }
+        }
+
+        [Test]
+        public void CreateMatrixFromArrayOfArray()
+        {
+            var matrix = new int[][]
+            {
+                new []{ 1, 2, 3, 4 },
+                new []{ 5, 6, 7, 8 },
+                new []{ 9, 10, 11, 12 }
+            };
+
+            var copy = new Matrix<int>(matrix);
+
+            Assert.AreEqual(matrix.Length, copy.Rows);
+            Assert.AreEqual(matrix[0].Length, copy.Columns);
+
+            for (var i = 0; i < copy.Rows; i++)
+            {
+                for (var j = 0; j < copy.Columns; j++)
+                {
+                    Assert.AreEqual(matrix[i][j], copy[i, j]);
                 }
             }
         }

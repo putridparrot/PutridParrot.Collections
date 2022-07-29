@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace PutridParrot.Collections
 {
-    public class ComparerImpl<T> : IComparer<T>, IEqualityComparer<T>, IComparer
+    public class Comparer<T> : IComparer<T>, IEqualityComparer<T>, IComparer
     {
         private readonly Func<T, T, int> _objectComparer;
         private readonly Func<T, int> _objectHash;
 
-        public ComparerImpl(Func<T, T, int> objectComparer) :
+        public Comparer(Func<T, T, int> objectComparer) :
             this(objectComparer, o => o.GetHashCode())
         {
         }
 
-        public ComparerImpl(Func<T, T, int> objectComparer, Func<T, int> objectHash)
+        public Comparer(Func<T, T, int> objectComparer, Func<T, int> objectHash)
         {
             _objectComparer = objectComparer ?? throw new ArgumentNullException(nameof(objectComparer));
             _objectHash = objectHash ?? throw new ArgumentNullException(nameof(objectHash)); ;

@@ -1,5 +1,9 @@
 ﻿namespace PutridParrot.Collections
 {
+    /// <summary>
+    /// Simple Binary Tree Node 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class BinaryTreeNode<T>
     {
         public BinaryTreeNode()
@@ -21,6 +25,4 @@
         public BinaryTreeNode<T> Left { get; set; }
         public BinaryTreeNode<T> Right { get; set; }
     }
-
-
 }

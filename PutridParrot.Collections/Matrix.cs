@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PutridParrot.Collections
 {
     /// <summary>
-    /// A two-dimensional collection class
+    /// A two-dimensional (non-jagged) collection class in the same vein as a T[,]
     /// </summary>
     /// <typeparam name="T">The type to be stored within the collection</typeparam>
     public class Matrix<T> : ICloneable, IEnumerable<T>
@@ -41,10 +42,28 @@ namespace PutridParrot.Collections
         /// Creates a matrix from the supplied two dimensional array
         /// </summary>
         /// <param name="matrix">The two dimensional array to be copied</param>
+        public Matrix(T[][] matrix)
+        {
+            Copy(matrix);
+        }
+        /// <summary>
+        /// Creates a matrix from the supplied two dimensional array
+        /// </summary>
+        /// <param name="matrix">The two dimensional array to be copied</param>
         public Matrix(T[,] matrix)
         {
             Copy(matrix);
         }
+
+        /// <summary>
+        /// Creates a matrix from the supplied enumerable of enumerable
+        /// </summary>
+        /// <param name="matrix">The enumerable of enumerable to represent the matrix</param>
+        public Matrix(IEnumerable<IEnumerable<T>> matrix)
+        {
+            Copy(matrix);
+        }
+
         /// <summary>
         /// Copy constructor
         /// </summary>
@@ -107,7 +126,7 @@ namespace PutridParrot.Collections
         /// <summary>
         /// Gets whether the matrix is empty or not.
         /// </summary>
-        public bool IsEmpty => _matrix == null;
+        public bool IsEmpty => _matrix.IsNullOrEmpty();
 
         /// <summary>
         /// Creates a clone of the current matrix. This is the same as copy but
@@ -139,6 +158,37 @@ namespace PutridParrot.Collections
                 for (var j = 0; j < Columns; j++)
                 {
                     _matrix[i, j] = data[i, j];
+                }
+            }
+        }
+
+        public void Copy(T[][] data)
+        {
+            var rowCount = data.Length;
+            var columnCount = rowCount > 0 ? data.Max(e => e.Count()) : 0;
+            _matrix = Create(rowCount, columnCount);
+            for (var i = 0; i < rowCount; i++)
+            {
+                var row = data[i];
+                for (var j = 0; j < row.Length; j++)
+                {
+                    _matrix[i, j] = row[j];
+                }
+            }
+        }
+
+        public void Copy(IEnumerable<IEnumerable<T>> data)
+        {
+            var rows = data.ToArray();
+            var rowCount = rows.Length;
+            var columnCount = rowCount > 0 ? rows.Max(e => e.Count()) : 0;
+            _matrix = Create(rowCount, columnCount);
+            for (var i = 0; i < rowCount; i++)
+            {
+                var row = rows[i].ToArray();
+                for (var j = 0; j < row.Length; j++)
+                {
+                    _matrix[i, j] = row[j];
                 }
             }
         }
