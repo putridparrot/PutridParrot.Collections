@@ -9,15 +9,20 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    name: Build on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        tools-version: [6.0.x]
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: ${{ matrix.tools-version }}
+
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -26,6 +31,7 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
     - name: Create Package
       run: dotnet pack --configuration Release
+      
     # - name: Create Artifacts
     #   uses: actions/upload-artifact@v2
     #   with:
