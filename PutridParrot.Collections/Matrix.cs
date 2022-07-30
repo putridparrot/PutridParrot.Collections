@@ -162,6 +162,10 @@ namespace PutridParrot.Collections
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
         public void Copy(T[][] data)
         {
             var rowCount = data.Length;
@@ -177,6 +181,10 @@ namespace PutridParrot.Collections
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
         public void Copy(IEnumerable<IEnumerable<T>> data)
         {
             var rows = data.ToArray();

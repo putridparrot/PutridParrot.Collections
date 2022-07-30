@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace PutridParrot.Collections
 {
+    /// <summary>
+    /// Extension methods of IList
+    /// </summary>
     public static class ListExtensions
     {
         /// <summary>
@@ -38,13 +41,42 @@ namespace PutridParrot.Collections
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="searchItem"></param>
+        /// <param name="listItem"></param>
+        /// <returns></returns>
         public delegate int CompareValues<TSearchItem, TListItem>(TSearchItem searchItem, TListItem listItem);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             return BinarySearch(list, 0, list.Count - 1, searchItem, matcher);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, int lowerBound, int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             if (lowerBound > upperBound)
@@ -74,11 +106,32 @@ namespace PutridParrot.Collections
             return -1;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearchInsertionPoint<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             return BinarySearchInsertionPoint(list, 0, list.Count - 1, searchItem, matcher);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static int BinarySearchInsertionPoint<TSearchItem, TListItem>(this IList<TListItem> list, int lowerBound,
             int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
@@ -120,11 +173,30 @@ namespace PutridParrot.Collections
             return highIndex < 0 ? 0 : lowIndex;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearch<T>(this IList<T> list, T item, Comparison<T> matcher)
         {
             return BinarySearch(list, 0, list.Count - 1, item, matcher);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="item"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static int BinarySearch<T>(this IList<T> list, int lowerBound, int upperBound, T item, Comparison<T> matcher)
         {
             if (lowerBound > upperBound)
@@ -178,14 +250,23 @@ namespace PutridParrot.Collections
             return -1;
         }
 
-        public static void Distinct<T>(this IList<T> list, Func<T, T, int> comparer)
+        /// <summary>
+        /// Creates a new list with the distinct items from the supplied list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static IList<T> Distinct<T>(this IList<T> list, Func<T, T, int> comparer)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (comparer == null)
                 throw new ArgumentNullException(nameof(comparer));
 
-            var newList = list.Distinct(new Comparer<T>(comparer)).ToList();
-            list.Clear();
-            list.AddRange(newList);
+            return list.Distinct(new Comparer<T>(comparer)).ToList();
         }
 
         /// <summary>
@@ -196,6 +277,7 @@ namespace PutridParrot.Collections
         /// <param name="list"></param>
         /// <param name="item"></param>
         /// <param name="comparison"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public static void Add<T>(this IList<T> list, T item, Comparison<T> comparison)
         {
             if (comparison == null)

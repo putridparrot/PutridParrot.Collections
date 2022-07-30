@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace PutridParrot.Collections
 {
+    /// <summary>
+    /// Extension methods for IEnumerable
+    /// </summary>
     public static partial class EnumerableExtensions
     {
         /// <summary>
@@ -11,8 +14,8 @@ namespace PutridParrot.Collections
         /// item and index
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="enumerable"></param>
-        /// <param name="action"></param>
+        /// <param name="enumerable">The enumerable to for each over</param>
+        /// <param name="action">The action to invoke for each item from the enumerable. It's passed both the item and index from the enumerable.</param>
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T, int> action)
         {
             if(enumerable == null)
@@ -36,22 +39,24 @@ namespace PutridParrot.Collections
         /// item
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="enumerable"></param>
-        /// <param name="action"></param>
+        /// <param name="enumerable">The enumerable to for each over</param>
+        /// <param name="action">The action to invoke for each item on the enumerable</param>
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             ForEach(enumerable, (item, _) => action(item));
         }
 
         /// <summary>
-        /// Concat enumerables
+        /// Concat enumerables. This simple extends the standard Concat functionality to
+        /// use allow us to pass as params
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="enumerable"></param>
-        /// <param name="first"></param>
-        /// <param name="second"></param>
-        /// <param name="subsequent"></param>
-        /// <returns></returns>
+        /// <param name="enumerable">The enumerable we're going to concat to</param>
+        /// <param name="first">The first enumerable to concat</param>
+        /// <param name="second">The second enumerable to concat</param>
+        /// <param name="subsequent">Any subsequent enumerables to concat</param>
+        /// <returns>The enumerable followed by first, second and subsequent enumerables</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, IEnumerable<T> first, IEnumerable<T> second,
             params IEnumerable<T>[] subsequent)
         {
@@ -76,9 +81,10 @@ namespace PutridParrot.Collections
         /// Enumerate the enumerable N number of times
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="enumerable"></param>
-        /// <param name="numberOfTimes"></param>
-        /// <returns></returns>
+        /// <param name="enumerable">The enumerable to repeat</param>
+        /// <param name="numberOfTimes">The number of times to repeat the numerable, 0 return an empty enumerable</param>
+        /// <returns>The enumerable repeated</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<T> Repeat<T>(this IEnumerable<T> enumerable, int numberOfTimes)
         {
             if (enumerable == null)
@@ -86,7 +92,7 @@ namespace PutridParrot.Collections
             if(numberOfTimes < 0)
                 throw new ArgumentOutOfRangeException(nameof(numberOfTimes));
 
-            for (var i = 0; i < numberOfTimes + 1; i++)
+            for (var i = 0; i < numberOfTimes; i++)
             {
                 foreach (var item in enumerable)
                 {
@@ -103,6 +109,7 @@ namespace PutridParrot.Collections
         /// <param name="enumerable"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static int IndexOf<T>(this IEnumerable<T> enumerable, Predicate<T> predicate)
         {
             if (enumerable == null)
@@ -131,6 +138,7 @@ namespace PutridParrot.Collections
         /// <typeparam name="T"></typeparam>
         /// <param name="enumerable"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> enumerable)
         {
             if (enumerable == null)
@@ -147,6 +155,7 @@ namespace PutridParrot.Collections
         /// <param name="enumerable"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static string Join<T>(this IEnumerable<T> enumerable, string separator = ", ")
         {
             if (enumerable == null)
@@ -164,10 +173,10 @@ namespace PutridParrot.Collections
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="enumerable"></param>
-        /// <returns></returns>
+        /// <returns>A non-null enumerable</returns>
         public static IEnumerable<T> NullToEmpty<T>(this IEnumerable<T> enumerable)
         {
-            return enumerable ?? System.Linq.Enumerable.Empty<T>();
+            return enumerable ?? Enumerable.Empty<T>();
         }
 
         /// <summary>
@@ -228,5 +237,32 @@ namespace PutridParrot.Collections
         {
             yield return item;
         }
+
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Take<T>(this IEnumerable<T> enumerable, Range range)
+        {
+            return Take(enumerable, range.Start.Value, range.End.Value - range.Start.Value);
+        }
+
+        /// <summary>
+        /// Gets a Range as an enumerable of integers
+        /// </summary>
+        /// <param name="range">The range instance</param>
+        /// <returns></returns>
+        public static IEnumerable<int> ToEnumerable(this Range range)
+        {
+            foreach (var item in Enumerable.Range(range.Start.Value, range.End.Value))
+            {
+                yield return item;
+            }
+        }
+#endif
     }
 }

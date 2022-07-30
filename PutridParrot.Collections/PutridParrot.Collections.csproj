@@ -1,7 +1,32 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<ImplicitUsings>disable</ImplicitUsings>
+	<Nullable>disable</Nullable>
+	<Company>PutridParrot</Company>
+	<Authors>Mark Timmings</Authors>
+	<Description>Collection based functionality</Description>
+	<Version>0.1.0-alpha</Version>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<RepositoryUrl>https://github.com/putridparrot/PutridParrot.Collections.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageIcon>PutridParrot.Collections.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<AssemblyVersion>0.1.0.0</AssemblyVersion>
+	<FileVersion>0.1.0.0</FileVersion>
   </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\PutridParrot.Collections.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

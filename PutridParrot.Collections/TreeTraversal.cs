@@ -10,7 +10,15 @@ namespace PutridParrot.Collections
     /// </summary>
     public static class TraverseTree
     {
-        // https://en.wikipedia.org/wiki/Tree_traversal#Pre-order
+        /// <summary>
+        /// Executes a pre-order traversal of the supplied nodes invoking
+        /// the supplied action on each node
+        /// </summary>
+        /// <seealso href="https://en.wikipedia.org/wiki/Tree_traversal#Pre-order"/>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="getChildNodes"></param>
+        /// <param name="preOrderAction"></param>
         public static void PreOrderTraversal<T>(T node, Func<T, IEnumerable<T>> getChildNodes, Action<T> preOrderAction)
         {
             if (node != null)
@@ -26,7 +34,15 @@ namespace PutridParrot.Collections
             }
         }
 
-        // https://en.wikipedia.org/wiki/Tree_traversal#Post-order
+        /// <summary>
+        /// Executes a post-order traversal of the supplied nodes invoking
+        /// the supplied action on each node
+        /// </summary>
+        /// <seealso href="https://en.wikipedia.org/wiki/Tree_traversal#Post-order"/>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="getChildNodes"></param>
+        /// <param name="postOrderAction"></param>
         public static void PostOrderTraversal<T>(T node, Func<T, IEnumerable<T>> getChildNodes, Action<T> postOrderAction)
         {
             if (node != null)
@@ -42,7 +58,15 @@ namespace PutridParrot.Collections
             }
         }
 
-        // https://en.wikipedia.org/wiki/Tree_traversal#In-order
+        /// <summary>
+        /// Executes an in-order traversal of the supplied nodes invoking
+        /// the supplied action on each node
+        /// </summary>
+        /// <seealso href="https://en.wikipedia.org/wiki/Tree_traversal#In-order"/>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="getChildNodes"></param>
+        /// <param name="inOrderAction"></param>
         public static void InOrderTraversal<T>(T node, Func<T, T[]> getChildNodes, Action<T> inOrderAction)
         {
             if (node != null)
@@ -58,6 +82,14 @@ namespace PutridParrot.Collections
             }
         }
 
+        /// <summary>
+        /// Executes an breadth traversal of the supplied nodes invoking
+        /// the supplied action on each node
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="getChildNodes"></param>
+        /// <param name="breadthAction"></param>
         public static void BreadthTraversal<T>(T node, Func<T, IEnumerable<T>> getChildNodes, Action<T> breadthAction)
         {
             var d = new Dictionary<T, bool>();

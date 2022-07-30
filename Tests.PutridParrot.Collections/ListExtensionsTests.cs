@@ -76,9 +76,9 @@ namespace Tests.PutridParrot.Collections
                 "One", "Two"
             };
 
-            list.Distinct((a, b) => String.Compare(a, b, StringComparison.Ordinal));
+            var distinctList = list.Distinct((a, b) => String.Compare(a, b, StringComparison.Ordinal));
 
-            Assert.That(list.Count, Is.EqualTo(2));
+            Assert.That(distinctList.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -89,9 +89,9 @@ namespace Tests.PutridParrot.Collections
                 "One", "Two", "Two", "One"
             };
 
-            list.Distinct((a, b) => String.Compare(a, b, StringComparison.Ordinal));
+            var distinctList = list.Distinct((a, b) => String.Compare(a, b, StringComparison.Ordinal));
 
-            Assert.That(list.Count, Is.EqualTo(2));
+            Assert.That(distinctList.Count, Is.EqualTo(2));
         }
 
         [Test]

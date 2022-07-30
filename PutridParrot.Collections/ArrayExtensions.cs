@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace PutridParrot.Collections
@@ -16,9 +15,10 @@ namespace PutridParrot.Collections
         /// is in the form [row, column]
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <param name="column"></param>
+        /// <param name="array">The array to get the column from</param>
+        /// <param name="column">The column index</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<T> GetColumn<T>(this T[,] array, int column)
         {
             if (array == null)
@@ -39,9 +39,10 @@ namespace PutridParrot.Collections
         /// is in the form [row, column]
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <param name="row"></param>
+        /// <param name="array">The array to get the row from</param>
+        /// <param name="row">The row index</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<T> GetRow<T>(this T[,] array, int row)
         {
             if (array == null)
@@ -61,8 +62,9 @@ namespace PutridParrot.Collections
         /// Gets all rows as an IEnumerable
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
+        /// <param name="array">The array to get the rows from</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<IEnumerable<T>> GetRows<T>(this T[,] array)
         {
             if (array == null)
@@ -78,8 +80,9 @@ namespace PutridParrot.Collections
         /// Flattens a two dimensional array into a single IEnumerable
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
+        /// <param name="array">The two dimensional array to flatten"</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IEnumerable<T> Flatten<T>(this T[,] array)
         {
             if (array == null)
@@ -98,15 +101,15 @@ namespace PutridParrot.Collections
         /// Is the supplied array null or empty
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <returns></returns>
+        /// <param name="array">The array to check</param>
+        /// <returns>True if the array is null or has zero length</returns>
         public static bool IsNullOrEmpty<T>(this T[] array) => array == null || array.Length == 0;
         /// <summary>
         /// Is the supplied 2D array null or empty
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <returns></returns>
+        /// <param name="array">The array to check></param>
+        /// <returns>True if the array is null or has zero length on both dimensions</returns>
         public static bool IsNullOrEmpty<T>(this T[,] array) => array == null || array.GetLength(0) == 0 && array.GetLength(1) == 0;
 
         /// <summary>
@@ -114,8 +117,8 @@ namespace PutridParrot.Collections
         /// array of max row size
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="enumerable"></param>
-        /// <returns></returns>
+        /// <param name="enumerable">The enumerable or enumerable to convert to a two dimensional array</param>
+        /// <returns>A two dimensional array representing to enumerable or enumerable</returns>
         public static T[,] To2dArray<T>(this IEnumerable<IEnumerable<T>> enumerable)
         {
             if (enumerable == null)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using PutridParrot.Collections;
 
@@ -58,16 +57,23 @@ namespace Tests.PutridParrot.Collections
         }
 
         [Test]
-        public void Repeat_ZeroTimesExpectSameAsInput()
+        public void Repeat_ZeroTimesExpectEmptyEnumerable()
         {
             var a = new List<int> { 1, 2 }.Repeat(0);
+            Assert.AreEqual(Array.Empty<int>(), a);
+        }
+
+        [Test]
+        public void Repeat_OneTimeExpectSameAsInput()
+        {
+            var a = new List<int> { 1, 2 }.Repeat(1);
             Assert.AreEqual(new[] { 1, 2 }, a);
         }
 
         [Test]
-        public void Repeat_OnceTimesExpectSameAsInput()
+        public void Repeat_TwoTimesExpectSameAsInput()
         {
-            var a = new List<int> { 1, 2 }.Repeat(1);
+            var a = new List<int> { 1, 2 }.Repeat(2);
             Assert.AreEqual(new[] { 1, 2, 1, 2 }, a);
         }
 
@@ -75,7 +81,7 @@ namespace Tests.PutridParrot.Collections
         public void Repeat_MultipleTimesExpectSameAsInput()
         {
             var a = new List<int> { 1, 2 }.Repeat(3);
-            Assert.AreEqual(new[] { 1, 2, 1, 2, 1, 2, 1, 2 }, a);
+            Assert.AreEqual(new[] { 1, 2, 1, 2, 1, 2 }, a);
         }
 
         [Test]
