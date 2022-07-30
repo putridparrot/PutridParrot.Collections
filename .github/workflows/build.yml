@@ -32,11 +32,11 @@ jobs:
     - name: Create Package
       run: dotnet pack --configuration Release
       
-    # - name: Create Artifacts
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: PutridParrot.Collections
-    #     path: /home/runner/work/PutridParrot.Collections/PutridParrot.Collections/PutridParrot.Collections/bin/Release/PutridParrot.Collections.*.nupkg
+    - name: Create Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: PutridParrot.Collections
+        path: /home/runner/work/PutridParrot.Collections/PutridParrot.Collections/PutridParrot.Collections/bin/Release/PutridParrot.Collections.*.nupkg
     # - name: Publish to Nuget
     #   run: dotnet nuget push /home/runner/work/PutridParrot.Collections/PutridParrot.Collections/PutridParrot.Collections/bin/Release/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
     # - name: Publish to GitHub
