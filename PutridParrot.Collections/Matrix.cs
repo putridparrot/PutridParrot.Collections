@@ -169,7 +169,7 @@ namespace PutridParrot.Collections
         public void Copy(T[][] data)
         {
             var rowCount = data.Length;
-            var columnCount = rowCount > 0 ? data.Max(e => e.Count()) : 0;
+            var columnCount = rowCount > 0 ? data.Max(e => e.Length) : 0;
             _matrix = Create(rowCount, columnCount);
             for (var i = 0; i < rowCount; i++)
             {
@@ -211,15 +211,7 @@ namespace PutridParrot.Collections
             if (rows == 0 || columns == 0)
                 return null;
 
-            var tmp = Create(rows, columns);
-            for (var i = 0; i < tmp.GetLength(0); i++)
-            {
-                for (var j = 0; j < tmp.GetLength(1); j++)
-                {
-                    tmp[i, j] = defaultValue;
-                }
-            }
-            return tmp;
+            return Create(rows, columns).Fill(defaultValue);
         }
         #endregion
 
@@ -247,6 +239,14 @@ namespace PutridParrot.Collections
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<T>)this).GetEnumerator();
+        }
+
+        /// <summary>
+        /// Transpose rows to columns and columns to rows
+        /// </summary>
+        public void Transpose()
+        {
+            _matrix = _matrix.Transpose();
         }
     }
 }

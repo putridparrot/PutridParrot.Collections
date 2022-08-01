@@ -53,5 +53,11 @@ namespace Tests.PutridParrot.Collections
             Assert.AreEqual(new[]{ 3, 4 }, array.GetRow(1));
         }
 
+        [Test]
+        public void NullToEmpty_NullArray_ShouldReturnEmptyArray()
+        {
+            int[] array = null;
+            Assert.NotNull(array.NullToEmpty());
+        }
     }
 }
