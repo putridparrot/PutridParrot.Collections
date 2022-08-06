@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PutridParrot.Collections
 {
@@ -9,38 +8,6 @@ namespace PutridParrot.Collections
     /// </summary>
     public static class ListExtensions
     {
-        /// <summary>
-        /// A simple AddRange which allows the user to include an item if the Predicate
-        /// returns true.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <param name="items"></param>
-        /// <param name="function"></param>
-        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Predicate<T> function = null)
-        {
-            if (list != null)
-            {
-                if (function == null)
-                {
-                    foreach (var item in items)
-                    {
-                        list.Add(item);
-                    }
-                }
-                else
-                {
-                    foreach (var item in items)
-                    {
-                        if (function(item))
-                        {
-                            list.Add(item);
-                        }
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -60,7 +27,8 @@ namespace PutridParrot.Collections
         /// <param name="searchItem"></param>
         /// <param name="matcher"></param>
         /// <returns></returns>
-        public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
+        public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem,
+            CompareValues<TSearchItem, TListItem> matcher)
         {
             return BinarySearch(list, 0, list.Count - 1, searchItem, matcher);
         }
@@ -77,12 +45,15 @@ namespace PutridParrot.Collections
         /// <param name="matcher"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, int lowerBound, int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
+        public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, int lowerBound,
+            int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             if (lowerBound > upperBound)
-                throw new ArgumentOutOfRangeException(nameof(lowerBound), "lowerBound must be less than or equal to upperBound");
+                throw new ArgumentOutOfRangeException(nameof(lowerBound),
+                    "lowerBound must be less than or equal to upperBound");
             if (upperBound >= list.Count)
-                throw new ArgumentOutOfRangeException(nameof(upperBound), "upperBound must be less than the size of the collection");
+                throw new ArgumentOutOfRangeException(nameof(upperBound),
+                    "upperBound must be less than the size of the collection");
 
             var start = lowerBound;
             var end = upperBound;
@@ -103,6 +74,7 @@ namespace PutridParrot.Collections
                     start = mid + 1;
                 }
             }
+
             return -1;
         }
 
@@ -115,7 +87,8 @@ namespace PutridParrot.Collections
         /// <param name="searchItem"></param>
         /// <param name="matcher"></param>
         /// <returns></returns>
-        public static int BinarySearchInsertionPoint<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
+        public static int BinarySearchInsertionPoint<TSearchItem, TListItem>(this IList<TListItem> list,
+            TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             return BinarySearchInsertionPoint(list, 0, list.Count - 1, searchItem, matcher);
         }
@@ -136,9 +109,11 @@ namespace PutridParrot.Collections
             int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             if (lowerBound > upperBound)
-                throw new ArgumentOutOfRangeException(nameof(lowerBound), "lowerBound must be less than or equal to upperBound");
+                throw new ArgumentOutOfRangeException(nameof(lowerBound),
+                    "lowerBound must be less than or equal to upperBound");
             if (upperBound >= list.Count)
-                throw new ArgumentOutOfRangeException(nameof(upperBound), "upperBound must be less than the size of the collection");
+                throw new ArgumentOutOfRangeException(nameof(upperBound),
+                    "upperBound must be less than the size of the collection");
 
             var highIndex = upperBound;
             var lowIndex = lowerBound;
@@ -165,6 +140,7 @@ namespace PutridParrot.Collections
                             return i;
                         }
                     }
+
                     // if there's no value larger than return upperbound
                     return upperBound + 1;
                 }
@@ -197,12 +173,15 @@ namespace PutridParrot.Collections
         /// <param name="matcher"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static int BinarySearch<T>(this IList<T> list, int lowerBound, int upperBound, T item, Comparison<T> matcher)
+        public static int BinarySearch<T>(this IList<T> list, int lowerBound, int upperBound, T item,
+            Comparison<T> matcher)
         {
             if (lowerBound > upperBound)
-                throw new ArgumentOutOfRangeException(nameof(lowerBound), "lowerBound must be less than or equal to upperBound");
+                throw new ArgumentOutOfRangeException(nameof(lowerBound),
+                    "lowerBound must be less than or equal to upperBound");
             if (upperBound >= list.Count)
-                throw new ArgumentOutOfRangeException(nameof(upperBound), "upperBound must be less than the size of the collection");
+                throw new ArgumentOutOfRangeException(nameof(upperBound),
+                    "upperBound must be less than the size of the collection");
 
             var start = lowerBound;
             var end = upperBound;
@@ -225,6 +204,7 @@ namespace PutridParrot.Collections
                     start = mid + 1;
                 }
             }
+
             return -1;
         }
 
@@ -237,7 +217,7 @@ namespace PutridParrot.Collections
         /// <returns></returns>
         public static int IndexOf<T>(this IList<T> list, Predicate<T> predicate)
         {
-            if(predicate == null)
+            if (predicate == null)
                 throw new ArgumentNullException(nameof(predicate));
 
             for (var i = 0; i < list.Count; i++)
@@ -247,26 +227,8 @@ namespace PutridParrot.Collections
                     return i;
                 }
             }
+
             return -1;
-        }
-
-        /// <summary>
-        /// Creates a new list with the distinct items from the supplied list
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <param name="comparer"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static IList<T> Distinct<T>(this IList<T> list, Func<T, T, int> comparer)
-        {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
-
-            if (comparer == null)
-                throw new ArgumentNullException(nameof(comparer));
-
-            return list.Distinct(new Comparer<T>(comparer)).ToList();
         }
 
         /// <summary>
@@ -324,10 +286,12 @@ namespace PutridParrot.Collections
                 {
                     i++;
                 }
+
                 while (comparison(x, list[j]) < 0)
                 {
                     j--;
                 }
+
                 if (i <= j)
                 {
                     var tmp = list[i];
@@ -335,10 +299,12 @@ namespace PutridParrot.Collections
                     list[j--] = tmp;
                 }
             }
+
             if (left < j)
             {
                 Sort(list, left, j, comparison);
             }
+
             if (i < right)
             {
                 Sort(list, i, right, comparison);

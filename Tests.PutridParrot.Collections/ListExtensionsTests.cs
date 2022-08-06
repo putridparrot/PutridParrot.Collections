@@ -11,24 +11,6 @@ namespace Tests.PutridParrot.Collections
     public class ListExtensionsTests
     {
         [Test]
-        public void AddRangeToList_ExpectIncreasedSize()
-        {
-            IList<string> list = new List<string>();
-            list.AddRange(new[] {"Hello", "World"});
-
-            Assert.That(list.Count, Is.EqualTo(2));
-        }
-
-        [Test]
-        public void AddRangeToListWithPredicate_ExpectCorrectSize()
-        {
-            IList<string> list = new List<string>();
-            list.AddRange(new[] { "Hello", "W" }, s => s.Length == 1);
-
-            Assert.That(list.Count, Is.EqualTo(1));
-        }
-
-        [Test]
         public void IndexOf_WithoutPredicate_ExpectException()
         {
             IList<string> list = new List<string>
@@ -69,32 +51,6 @@ namespace Tests.PutridParrot.Collections
         }
 
         [Test]
-        public void Distinct_WhenNoDuplicatesExpectUnchanged()
-        {
-            IList<string> list = new List<string>
-            {
-                "One", "Two"
-            };
-
-            var distinctList = list.Distinct((a, b) => String.Compare(a, b, StringComparison.Ordinal));
-
-            Assert.That(distinctList.Count, Is.EqualTo(2));
-        }
-
-        [Test]
-        public void Distinct_WhenDuplicatesExistExpectChanged()
-        {
-            IList<string> list = new List<string>
-            {
-                "One", "Two", "Two", "One"
-            };
-
-            var distinctList = list.Distinct((a, b) => String.Compare(a, b, StringComparison.Ordinal));
-
-            Assert.That(distinctList.Count, Is.EqualTo(2));
-        }
-
-        [Test]
         public void Sort_ExpectedArrayToBeSorted()
         {
             IList<int> array = new [] { 1, 5, 0, 2 };
@@ -118,6 +74,5 @@ namespace Tests.PutridParrot.Collections
             list.Add(4, (a, b) => a - b);
             Assert.AreEqual(4, list[3]);
         }
-
     }
 }
